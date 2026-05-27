@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ScrollReveal from "./ScrollReveal";
 import Image from "next/image";
 import { profile, socials } from "../data/portfolio";
+import ResumeModal from "./ResumeModal";
 
 /* ── Inline SVG icons ──────────────────────────── */
 
@@ -87,6 +88,7 @@ function WordCycler() {
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -151,13 +153,13 @@ export default function HeroSection() {
               >
                 View My Work
               </a>
-              <a
-                href="#contact"
-                id="cta-get-in-touch"
-                className="btn-outline inline-flex items-center gap-2 border border-white/20 px-6 py-3 text-white text-xs tracking-[0.15em] font-bold uppercase"
+              <button
+                onClick={() => setResumeOpen(true)}
+                id="cta-view-resume"
+                className="btn-outline inline-flex items-center gap-2 border border-white/20 px-6 py-3 text-white text-xs tracking-[0.15em] font-bold uppercase cursor-pointer"
               >
                 View My Resume
-              </a>
+              </button>
             </div>
           </ScrollReveal>
 
@@ -239,6 +241,8 @@ export default function HeroSection() {
         <span>↓</span>
         <span>SCROLL</span>
       </div>
+
+      <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
     </section>
   );
 }
