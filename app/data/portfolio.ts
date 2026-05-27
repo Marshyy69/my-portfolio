@@ -1,8 +1,5 @@
 /* ══════════════════════════════════════════════════════════════
    PORTFOLIO DATA — Single source of truth
-   ══════════════════════════════════════════════════════════════
-   Edit this file to update your entire portfolio.
-   Components import from here — no need to touch JSX code.
    ══════════════════════════════════════════════════════════════ */
 
 /* ── Profile ──────────────────────────────────────── */
@@ -52,6 +49,8 @@ export const skills = [
   "Supabase",
   "C#",
   "Tailwind CSS",
+  "Html & CSS",
+  "Git & GitHub",
 ];
 
 /* ── Projects ─────────────────────────────────────── */
