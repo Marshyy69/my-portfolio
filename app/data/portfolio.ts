@@ -105,7 +105,6 @@ export const projects: Project[] = [
     ],
     links: {
       github: "https://github.com/Marshyy69/mochiroam_ai",
-      // demo: "https://mochiroam.app",
     },
   },
 ];

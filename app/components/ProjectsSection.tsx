@@ -187,8 +187,10 @@ function LightboxModal({
 
 function ScreenshotGallery({
   images,
+  isMobileApp = false,
 }: {
   images: { src: string; alt: string }[];
+  isMobileApp?: boolean;
 }) {
   const [current, setCurrent] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -254,6 +256,118 @@ function ScreenshotGallery({
   }
 
   /* ── Gallery with images ── */
+  if (isMobileApp) {
+    return (
+      <>
+        <div
+          className="relative group/gallery mx-auto w-full max-w-[210px] sm:max-w-[230px] aspect-[9/19] rounded-[2rem] border-[6px] border-white/10 overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.8)] bg-[#050505] cursor-pointer"
+          onClick={() => setLightboxOpen(true)}
+        >
+          {/* Phone Notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-4 rounded-b-xl bg-white/10 z-20 flex items-center justify-center pointer-events-none">
+            <div className="w-8 h-1 bg-black/40 rounded-full" />
+          </div>
+
+          {/* Screen Content */}
+          <div className="absolute inset-0 w-full h-full">
+            {images.map((img, i) => (
+              <div
+                key={img.src}
+                className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                  i === current
+                    ? "opacity-100 scale-100"
+                    : "opacity-0 scale-105"
+                }`}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority={i === 0}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Gradient overlay at bottom */}
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none" />
+
+          {/* Expand button */}
+          <button
+            className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded bg-black/50 backdrop-blur-sm text-white/60 hover:text-white opacity-0 group-hover/gallery:opacity-100 transition-all duration-300 z-20"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightboxOpen(true);
+            }}
+            aria-label="View fullscreen"
+          >
+            <ExpandIcon />
+          </button>
+
+          {/* Caption */}
+          <div className="absolute bottom-4 left-3 right-3 z-20 pointer-events-none">
+            <p className="text-white/80 text-[0.55rem] tracking-wider uppercase font-medium text-center truncate">
+              {images[current].alt}
+            </p>
+          </div>
+
+          {/* Home Indicator Bar */}
+          <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-20 h-1 rounded-full bg-white/20 z-20 pointer-events-none" />
+        </div>
+
+        {/* Navigation arrows (floating outside) */}
+        {images.length > 1 && (
+          <div className="flex items-center justify-center gap-6 mt-4">
+            <button
+              onClick={prev}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all duration-300 cursor-pointer"
+              aria-label="Previous screenshot"
+            >
+              <ChevronLeftIcon />
+            </button>
+            
+            {/* Dot indicators */}
+            <div className="flex items-center gap-1.5">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`transition-all duration-300 rounded-full cursor-pointer ${
+                    i === current
+                      ? "w-4 h-1 bg-accent"
+                      : "w-1.5 h-1.5 bg-white/20 hover:bg-white/40"
+                  }`}
+                  aria-label={`Go to screenshot ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={next}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all duration-300 cursor-pointer"
+              aria-label="Next screenshot"
+            >
+              <ChevronRightIcon />
+            </button>
+          </div>
+        )}
+
+        {/* Lightbox */}
+        {lightboxOpen && (
+          <LightboxModal
+            images={images}
+            currentIndex={current}
+            onClose={() => setLightboxOpen(false)}
+            onPrev={prev}
+            onNext={next}
+          />
+        )}
+      </>
+    );
+  }
+
   return (
     <>
       <div className="relative group/gallery">
@@ -415,7 +529,10 @@ export default function ProjectsSection() {
 
                 {/* Gallery area */}
                 <div className="mt-6">
-                  <ScreenshotGallery images={project.screenshots} />
+                  <ScreenshotGallery
+                    images={project.screenshots}
+                    isMobileApp={project.type.toLowerCase().includes("mobile")}
+                  />
                 </div>
 
                 <div className="flex flex-wrap gap-2 mt-6">

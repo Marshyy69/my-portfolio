@@ -116,13 +116,36 @@ export default function HeroSection() {
           </ScrollReveal>
 
           <ScrollReveal delay={100}>
-            <h1 className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] leading-[0.9] mt-6 text-white">
-              HELLO, I&apos;M
-              <br />
-              {profile.name.first}
-              <br />
-              <span className="text-highlight">{profile.name.last}</span>
-            </h1>
+            <div className="relative flex items-end justify-between">
+              <h1 className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] leading-[0.9] mt-6 text-white pr-28 sm:pr-36 lg:pr-0">
+                HELLO, I&apos;M
+                <br />
+                {profile.name.first}
+                <br />
+                <span className="text-highlight">{profile.name.last}</span>
+              </h1>
+
+              {/* Mobile Profile Photo (only visible on mobile/tablet) */}
+              <div className="lg:hidden absolute right-0 bottom-1 w-[110px] h-[140px] sm:w-[140px] sm:h-[180px] shrink-0 z-20">
+                {/* Corner brackets */}
+                <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 border-t border-l border-accent" />
+                <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 border-t border-r border-accent" />
+                <div className="absolute -bottom-1.5 -left-1.5 w-3.5 h-3.5 border-b border-l border-accent" />
+                <div className="absolute -bottom-1.5 -right-1.5 w-3.5 h-3.5 border-b border-r border-highlight" />
+
+                {/* Photo */}
+                <div className="w-full h-full overflow-hidden rounded-sm">
+                  <Image
+                    src={profile.photo}
+                    alt={`${profile.name.first} ${profile.name.last}`}
+                    width={140}
+                    height={180}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </ScrollReveal>
 
           <ScrollReveal delay={150}>
@@ -196,7 +219,7 @@ export default function HeroSection() {
 
         {/* ── Right: Photo area ── */}
         <div className="relative hidden lg:flex items-center justify-center">
-          <div className="relative w-[320px] h-[400px]">
+          <div className="relative w-[280px] h-[350px] sm:w-[320px] sm:h-[400px] shrink-0">
             {/* Corner brackets */}
             <div
               className="absolute inset-0 pointer-events-none transition-transform duration-75 ease-out"
@@ -225,7 +248,7 @@ export default function HeroSection() {
           </div>
 
           {/* Vertical rotated text */}
-          <div className="absolute -right-4 top-1/2 -translate-y-1/2">
+          <div className="absolute -right-4 top-1/2 -translate-y-1/2 hidden sm:block">
             <span
               className="text-[0.65rem] tracking-[0.3em] text-subtle uppercase"
               style={{ writingMode: "vertical-rl" }}

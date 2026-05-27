@@ -52,7 +52,7 @@ export default function AboutSection() {
             <div className="flex items-end gap-0">
               {stats.map((stat, i) => (
                 <div key={stat.label} className="flex items-end">
-                  <div className="pr-6 lg:pr-10">
+                  <div className="pr-4 sm:pr-6 lg:pr-10">
                     <div className="font-heading text-4xl lg:text-5xl text-highlight leading-none">
                       <Counter value={stat.number} />
                     </div>
@@ -61,7 +61,7 @@ export default function AboutSection() {
                     </div>
                   </div>
                   {i < stats.length - 1 && (
-                    <div className="w-px h-14 bg-dim mr-6 lg:mr-10 shrink-0" />
+                    <div className="w-px h-14 bg-dim mr-4 sm:mr-6 lg:mr-10 shrink-0" />
                   )}
                 </div>
               ))}
