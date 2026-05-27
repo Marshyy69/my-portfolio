@@ -207,7 +207,9 @@ export default function HeroSection() {
                 <LinkedInIcon />
               </a>
               <a
-                href={`mailto:${socials.email}`}
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${socials.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted hover:text-white transition-colors duration-300"
                 aria-label="Send email"
               >

@@ -28,7 +28,7 @@ export default function CertificatesSection() {
       className="relative py-24 lg:py-32 overflow-hidden"
     >
       {/* Background number */}
-      <div className="bg-number right-4 top-8 lg:right-12">02</div>
+      <div className="bg-number right-4 top-8 lg:right-12">03</div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}

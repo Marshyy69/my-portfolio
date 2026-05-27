@@ -72,7 +72,9 @@ export default function ContactSection() {
         <ScrollReveal delay={200}>
           <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
             <a
-              href={`mailto:${socials.email}`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${socials.email}`}
+              target="_blank"
+              rel="noopener noreferrer"
               id="contact-email"
               className="btn-primary inline-flex items-center gap-2 bg-accent px-6 py-3 text-white text-xs tracking-[0.15em] font-bold uppercase"
             >
