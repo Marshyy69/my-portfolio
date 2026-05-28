@@ -5,7 +5,7 @@ import { profile, stats, skills } from "../data/portfolio";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-24 lg:py-32">
+    <section id="about" className="relative py-24 lg:py-32 bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* ── Top row: Title + Description ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">

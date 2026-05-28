@@ -20,13 +20,13 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
-        <SectionDivider />
+        <SectionDivider bgClass="bg-[#0a0a0a]" />
         <AboutSection />
-        <SectionDivider />
+        <SectionDivider bgClass="bg-[#0a0a0a]" />
         <ProjectsSection />
-        <SectionDivider />
+        <SectionDivider bgClass="bg-[#121212]" />
         <CertificatesSection />
-        <SectionDivider />
+        <SectionDivider bgClass="bg-[#0a0a0a]" />
         <ContactSection />
       </main>
       <Footer />

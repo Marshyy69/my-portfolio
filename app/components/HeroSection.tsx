@@ -103,12 +103,18 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden pt-20"
     >
+      {/* Split Background Layer */}
+      <div className="absolute inset-0 flex flex-col lg:flex-row pointer-events-none select-none z-0">
+        <div className="w-full lg:w-1/2 h-1/2 lg:h-full bg-[#0a0a0a]" />
+        <div className="w-full lg:w-1/2 h-1/2 lg:h-full bg-[#180a0a] border-t lg:border-t-0 lg:border-l border-white/5" />
+      </div>
+
       {/* Background decorative number */}
-      <div className="bg-number right-4 bottom-4 lg:right-12 lg:bottom-12">
+      <div className="bg-number right-4 bottom-4 lg:right-12 lg:bottom-12 z-0">
         01
       </div>
 
-      <div className="max-w-7xl mx-auto w-full px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div className="max-w-7xl mx-auto w-full px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center z-10 relative">
         {/* ── Left: Content ── */}
         <div className="z-10">
           <ScrollReveal>

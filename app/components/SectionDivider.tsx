@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export default function SectionDivider() {
+export default function SectionDivider({ bgClass = "bg-[#0a0a0a]" }: { bgClass?: string }) {
   const ref = useRef<SVGSVGElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -25,7 +25,7 @@ export default function SectionDivider() {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden h-16 relative z-10 flex items-center justify-center">
+    <div className={`w-full overflow-hidden h-16 relative z-10 flex items-center justify-center ${bgClass}`}>
       <svg
         ref={ref}
         className="w-full max-w-7xl px-6 lg:px-12 h-[2px]"

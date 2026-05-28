@@ -2,7 +2,7 @@ import { profile } from "../data/portfolio";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-dim py-6">
+    <footer className="border-t border-dim py-6 bg-[#121212]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Copyright */}
         <p className="text-subtle text-[0.65rem] tracking-[0.1em] uppercase">

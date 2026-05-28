@@ -68,7 +68,10 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
       <div className="relative w-full max-w-6xl h-[85vh] bg-[#0c0c0c] border border-white/10 flex flex-col md:flex-row z-10 rounded-sm overflow-hidden animate-modal-entrance glow-accent">
         
         {/* Left Panel: Profile Summary (1/3 width on desktop, full-width scrollable on mobile) */}
-        <div className="w-full md:w-[350px] border-b md:border-b-0 md:border-r border-white/5 bg-[#0e0e0e] flex flex-col justify-between shrink-0 overflow-y-auto">
+        <div 
+          className="w-full md:w-[350px] border-b md:border-b-0 md:border-r border-white/5 bg-[#0e0e0e] flex flex-col justify-between md:shrink-0 overflow-y-auto h-full"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
           {/* Main Info */}
           <div className="p-6 sm:p-8 space-y-6">
             {/* Header / Brand */}
@@ -225,7 +228,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         </div>
 
         {/* Right Panel: Document Viewer Frame (Interactive macOS Browser Mockup) */}
-        <div className="flex-1 bg-surface flex flex-col overflow-hidden relative">
+        <div className="hidden md:flex flex-1 bg-surface flex-col overflow-hidden relative">
           
           {/* macOS Browser Header */}
           <div className="h-11 bg-[#121212] border-b border-white/5 flex items-center px-4 justify-between shrink-0 select-none">

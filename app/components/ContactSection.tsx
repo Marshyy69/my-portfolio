@@ -34,7 +34,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative py-24 lg:py-32 overflow-hidden"
+      className="relative py-24 lg:py-32 overflow-hidden bg-[#121212]"
     >
       {/* Watermark text */}
       <div className="watermark left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

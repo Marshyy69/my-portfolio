@@ -477,7 +477,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="relative py-24 lg:py-32 overflow-hidden"
+      className="relative py-24 lg:py-32 overflow-hidden bg-[#121212]"
     >
       {/* Background number */}
       <div className="bg-number right-4 top-8 lg:right-12">02</div>

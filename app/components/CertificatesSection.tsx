@@ -25,7 +25,7 @@ export default function CertificatesSection() {
   return (
     <section
       id="certificates"
-      className="relative py-24 lg:py-32 overflow-hidden"
+      className="relative py-24 lg:py-32 overflow-hidden bg-[#0a0a0a]"
     >
       {/* Background number */}
       <div className="bg-number right-4 top-8 lg:right-12">03</div>
