@@ -5,7 +5,7 @@ import { profile, stats, skills } from "../data/portfolio";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-24 lg:py-32 bg-[#0a0a0a]">
+    <section id="about" className="relative py-12 lg:py-16 bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* ── Top row: Title + Description ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
@@ -15,10 +15,10 @@ export default function AboutSection() {
               <span className="section-label">About Me</span>
             </ScrollReveal>
             <ScrollReveal delay={100}>
-              <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.85] mt-6">
+              <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.95] mt-3 flex flex-col">
                 <span className="heading-gradient block">WHO</span>
                 <span className="heading-gradient block">AM</span>
-                <span className="text-highlight">I</span>
+                <span className="text-highlight block">I</span>
               </h2>
             </ScrollReveal>
           </div>
@@ -37,7 +37,7 @@ export default function AboutSection() {
 
         {/* ── Skill Ticker ── */}
         <ScrollReveal delay={220}>
-          <div className="-mx-6 lg:-mx-12 mt-16">
+          <div className="-mx-6 lg:-mx-12 mt-8">
             <MarqueeTicker
               items={[...skills, "TypeScript", "Next.js", "Dart", "Git", "REST APIs", "Figma"]}
               speed={25}
@@ -46,7 +46,7 @@ export default function AboutSection() {
         </ScrollReveal>
 
         {/* ── Bottom row: Stats + Skills ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mt-8">
           {/* Stats */}
           <ScrollReveal delay={250}>
             <div className="flex items-end gap-0">

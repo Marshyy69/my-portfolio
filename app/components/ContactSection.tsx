@@ -55,7 +55,7 @@ export default function ContactSection() {
 
         {/* Heading */}
         <ScrollReveal delay={100}>
-          <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.85] mt-6">
+          <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.95] mt-6">
             <span className="heading-gradient">LET&apos;S</span> <span className="text-highlight">TALK</span>
           </h2>
         </ScrollReveal>

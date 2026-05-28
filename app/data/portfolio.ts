@@ -11,7 +11,7 @@ export const profile = {
   },
   title: "Software Engineering Student",
   location: "Kuala Lumpur, Malaysia",
-  photo: "/Me.jpeg",
+  photo: "/Me2.jpg",
   logo: "/RdLogo.png",
   bio: {
     hero: "I build digital products that live at the intersection of clean code and bold design. Passionate about creating mobile and web apps that users actually love.",
@@ -33,7 +33,7 @@ export const socials = {
 /* ── Stats ────────────────────────────────────────── */
 
 export const stats = [
-  { number: "Fresh", label: "GRADUATE" },
+  { number: "1+", label: "Year EXP" },
   { number: "3", label: "PROJECTS" },
   { number: "7", label: "CERTS" },
 ];
@@ -74,6 +74,8 @@ export interface Project {
     github?: string;
     demo?: string;
   };
+  category: "web" | "mobile";
+  latest?: boolean;
 }
 
 export const projects: Project[] = [
@@ -105,6 +107,8 @@ export const projects: Project[] = [
     links: {
       github: "https://github.com/Marshyy69/mochiroam_ai",
     },
+    category: "mobile",
+    latest: true,
   },
 ];
 

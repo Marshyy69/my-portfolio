@@ -36,7 +36,7 @@ export default function CertificatesSection() {
           <span className="section-label">Credentials</span>
         </ScrollReveal>
         <ScrollReveal delay={100}>
-          <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.85] mt-6">
+          <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.95] mt-6">
             <span className="heading-gradient">CERTIFI</span>
             <span className="text-highlight">CATES</span>
           </h2>

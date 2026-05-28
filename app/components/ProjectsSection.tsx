@@ -474,6 +474,47 @@ function ScreenshotGallery({
 /* ── Projects Section ──────────────────────────── */
 
 export default function ProjectsSection() {
+  const [activeFilter, setActiveFilter] = useState<"all" | "latest" | "web" | "mobile">("all");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  // Filter projects based on selection
+  const filteredProjects = projects.filter((project) => {
+    if (activeFilter === "all") return true;
+    if (activeFilter === "latest") return project.latest;
+    return project.category === activeFilter;
+  });
+
+  const handleNext = () => {
+    if (animating || filteredProjects.length <= 1) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % filteredProjects.length);
+      setAnimating(false);
+    }, 300);
+  };
+
+  const handlePrev = () => {
+    if (animating || filteredProjects.length <= 1) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
+      setAnimating(false);
+    }, 300);
+  };
+
+  const handleFilterChange = (filter: typeof activeFilter) => {
+    if (animating || filter === activeFilter) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setActiveFilter(filter);
+      setCurrentIndex(0);
+      setAnimating(false);
+    }, 300);
+  };
+
+  const project = filteredProjects[currentIndex];
+
   return (
     <section
       id="projects"
@@ -484,123 +525,246 @@ export default function ProjectsSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
-        <ScrollReveal>
-          <span className="section-label">My Work</span>
-        </ScrollReveal>
-        <ScrollReveal delay={100}>
-          <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.85] mt-6">
-            <span className="heading-gradient block">PROJECTS</span>
-            <span className="text-highlight">BUILT</span>
-          </h2>
-        </ScrollReveal>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <ScrollReveal>
+              <span className="section-label">My Work</span>
+            </ScrollReveal>
+            <ScrollReveal delay={100}>
+              <h2 className="font-heading text-6xl sm:text-7xl lg:text-8xl leading-[0.95] mt-3 flex flex-col">
+                <span className="heading-gradient block">PROJECTS</span>
+                <span className="text-highlight block">BUILT</span>
+              </h2>
+            </ScrollReveal>
+          </div>
 
-        {/* ── Project Cards ── */}
-        {projects.map((project, idx) => (
-          <ScrollReveal key={project.name + project.nameHighlight} delay={200 + idx * 100}>
-            <div
-              className="project-card grid grid-cols-1 lg:grid-cols-2 mt-16 border border-dim"
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-                e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-              }}
-            >
-              {/* Left panel — Screenshot Gallery */}
-              <div className="bg-surface-card p-8 lg:p-10 flex flex-col justify-between min-h-[320px]">
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-10 h-10 border border-accent flex items-center justify-center text-accent">
-                      <PhoneIcon />
+          {/* Category Filters */}
+          <ScrollReveal delay={150}>
+            <div className="flex flex-wrap items-center gap-2 mt-4 select-none">
+              {(["all", "latest", "web", "mobile"] as const).map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => handleFilterChange(filter)}
+                  className={`px-4 py-2 text-[0.6rem] sm:text-[0.65rem] tracking-[0.15em] font-bold uppercase transition-all duration-300 border rounded-sm cursor-pointer ${
+                    activeFilter === filter
+                      ? "bg-accent border-accent text-white shadow-[0_4px_12px_rgba(198,40,40,0.25)]"
+                      : "border-white/10 text-muted hover:text-white hover:border-white/20"
+                  }`}
+                >
+                  {filter === "all" ? "All" : filter === "mobile" ? "Apps" : filter === "web" ? "Web" : filter}
+                </button>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+
+        {/* ── Active Project Card ── */}
+        {project ? (
+          <div className="relative mt-16">
+            
+            {/* Card Content Wrapper with Padding for Floating Side Arrows */}
+            <div className="relative px-0 md:px-16 lg:px-20">
+              
+              {/* Floating Side Arrows (visible on md and above) */}
+              {filteredProjects.length > 1 && (
+                <div className="hidden md:block select-none">
+                  {/* Left Arrow */}
+                  <button
+                    onClick={handlePrev}
+                    disabled={animating}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 border border-white/10 bg-[#0e0e0e]/80 backdrop-blur-sm hover:border-white/30 text-muted hover:text-white transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-30 z-20 hover:bg-[#141414] rounded-sm shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
+                    aria-label="Previous project"
+                  >
+                    <ChevronLeftIcon />
+                  </button>
+                  
+                  {/* Right Arrow */}
+                  <button
+                    onClick={handleNext}
+                    disabled={animating}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 border border-white/10 bg-[#0e0e0e]/80 backdrop-blur-sm hover:border-white/30 text-muted hover:text-white transition-all duration-300 flex items-center justify-center cursor-pointer disabled:opacity-30 z-20 hover:bg-[#141414] rounded-sm shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
+                    aria-label="Next project"
+                  >
+                    <ChevronRightIcon />
+                  </button>
+                </div>
+              )}
+
+              <div 
+                className={`transition-all duration-300 ease-in-out ${
+                  animating ? "opacity-0 translate-y-4 scale-[0.98]" : "opacity-100 translate-y-0 scale-100"
+                }`}
+              >
+                <div
+                  className="project-card grid grid-cols-1 lg:grid-cols-2 border border-dim"
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+                    e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+                  }}
+                >
+                  {/* Left panel — Screenshot Gallery */}
+                  <div className="bg-[#0a0a0a] p-8 lg:p-10 flex flex-col justify-between min-h-[320px]">
+                    <div>
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="w-10 h-10 border border-accent flex items-center justify-center text-accent">
+                          <PhoneIcon />
+                        </div>
+                        {project.screenshots.length > 0 && (
+                          <span className="text-white/20 text-[0.6rem] tracking-[0.15em] uppercase">
+                            {project.screenshots.length} screenshot{project.screenshots.length !== 1 ? "s" : ""}
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="text-[0.65rem] tracking-[0.15em] text-muted uppercase">
+                        {project.number} — {project.type}
+                      </p>
+                      <h3 className="font-heading text-4xl lg:text-5xl mt-2 text-white">
+                        {project.name}<span className="text-highlight">{project.nameHighlight}</span>
+                      </h3>
                     </div>
-                    {project.screenshots.length > 0 && (
-                      <span className="text-white/20 text-[0.6rem] tracking-[0.15em] uppercase">
-                        {project.screenshots.length} screenshot{project.screenshots.length !== 1 ? "s" : ""}
-                      </span>
-                    )}
+
+                    {/* Gallery area */}
+                    <div className="mt-6">
+                      <ScreenshotGallery
+                        images={project.screenshots}
+                        isMobileApp={project.type.toLowerCase().includes("mobile")}
+                      />
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {project.techStack.map((tech) => (
+                        <span key={tech} className="tech-tag">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="text-[0.65rem] tracking-[0.15em] text-muted uppercase">
-                    {project.number} — {project.type}
-                  </p>
-                  <h3 className="font-heading text-4xl lg:text-5xl mt-2 text-white">
-                    {project.name}<span className="text-highlight">{project.nameHighlight}</span>
-                  </h3>
-                </div>
+                  {/* Right panel */}
+                  <div className="bg-[#0d0d0d] p-8 lg:p-10 border-t lg:border-t-0 lg:border-l border-dim flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-6">
+                        <span className="inline-flex items-center gap-1.5 bg-highlight/15 text-highlight px-3 py-1 text-[0.6rem] tracking-[0.1em] uppercase font-semibold">
+                          {project.status}
+                        </span>
+                        <span className="text-muted">
+                          <CodeIcon />
+                        </span>
+                      </div>
 
-                {/* Gallery area */}
-                <div className="mt-6">
-                  <ScreenshotGallery
-                    images={project.screenshots}
-                    isMobileApp={project.type.toLowerCase().includes("mobile")}
-                  />
-                </div>
+                      <p className="text-muted leading-relaxed text-sm">
+                        {project.description}
+                      </p>
 
-                <div className="flex flex-wrap gap-2 mt-6">
-                  {project.techStack.map((tech) => (
-                    <span key={tech} className="tech-tag">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                      <ul className="mt-6 space-y-3">
+                        {project.features.map((feature) => (
+                          <li
+                            key={feature}
+                            className="flex items-start gap-3 text-muted text-sm"
+                          >
+                            <span className="text-accent mt-1 text-[0.55rem]">▶</span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-              {/* Right panel */}
-              <div className="bg-surface-card/50 p-8 lg:p-10 border-t lg:border-t-0 lg:border-l border-dim flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="inline-flex items-center gap-1.5 bg-highlight/15 text-highlight px-3 py-1 text-[0.6rem] tracking-[0.1em] uppercase font-semibold">
-                      {project.status}
-                    </span>
-                    <span className="text-muted">
-                      <CodeIcon />
-                    </span>
+                    <div className="flex items-center gap-6 mt-8">
+                      {project.links.github && (
+                        <a
+                          href={project.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-muted hover:text-white transition-colors duration-300"
+                        >
+                          <GitHubSmallIcon />
+                          View Code
+                        </a>
+                      )}
+                      {project.links.demo && (
+                        <a
+                          href={project.links.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-muted hover:text-white transition-colors duration-300"
+                        >
+                          <ExternalLinkIcon />
+                          Live Demo
+                        </a>
+                      )}
+                    </div>
                   </div>
-
-                  <p className="text-muted leading-relaxed text-sm">
-                    {project.description}
-                  </p>
-
-                  <ul className="mt-6 space-y-3">
-                    {project.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-start gap-3 text-muted text-sm"
-                      >
-                        <span className="text-accent mt-1 text-[0.55rem]">▶</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex items-center gap-6 mt-8">
-                  {project.links.github && (
-                    <a
-                      href={project.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-muted hover:text-white transition-colors duration-300"
-                    >
-                      <GitHubSmallIcon />
-                      View Code
-                    </a>
-                  )}
-                  {project.links.demo && (
-                    <a
-                      href={project.links.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-muted hover:text-white transition-colors duration-300"
-                    >
-                      <ExternalLinkIcon />
-                      Live Demo
-                    </a>
-                  )}
                 </div>
               </div>
             </div>
-          </ScrollReveal>
-        ))}
+
+            {/* ── Carousel Slider Controls ── */}
+            {filteredProjects.length > 1 && (
+              <ScrollReveal delay={100}>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 bg-white/[0.02] border border-white/5 p-4 rounded-sm">
+                  {/* Left: Numeric indicator */}
+                  <div className="text-[0.65rem] tracking-[0.2em] text-muted uppercase font-semibold">
+                    Project <span className="text-white font-mono font-bold">{(currentIndex + 1).toString().padStart(2, '0')}</span> of <span className="text-white font-mono">{filteredProjects.length.toString().padStart(2, '0')}</span>
+                  </div>
+
+                  {/* Center: Dots index */}
+                  <div className="flex items-center gap-2">
+                    {filteredProjects.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          if (animating || idx === currentIndex) return;
+                          setAnimating(true);
+                          setTimeout(() => {
+                            setCurrentIndex(idx);
+                            setAnimating(false);
+                          }, 300);
+                        }}
+                        className={`h-1.5 transition-all duration-300 rounded-full cursor-pointer ${
+                          idx === currentIndex ? "w-6 bg-accent" : "w-1.5 bg-white/20 hover:bg-white/40"
+                        }`}
+                        aria-label={`Go to project ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Right: Next / Prev arrows on mobile, status text on desktop */}
+                  <div className="flex md:hidden items-center gap-2 select-none">
+                    <button
+                      onClick={handlePrev}
+                      disabled={animating}
+                      className="w-10 h-10 border border-white/10 hover:border-white/20 text-muted hover:text-white transition-all flex items-center justify-center cursor-pointer disabled:opacity-50 rounded-sm"
+                      aria-label="Previous project"
+                    >
+                      <ChevronLeftIcon />
+                    </button>
+                    
+                    <button
+                      onClick={handleNext}
+                      disabled={animating}
+                      className="w-10 h-10 border border-white/10 hover:border-white/20 text-muted hover:text-white transition-all flex items-center justify-center cursor-pointer disabled:opacity-50 rounded-sm"
+                      aria-label="Next project"
+                    >
+                      <ChevronRightIcon />
+                    </button>
+                  </div>
+
+                  <div className="hidden md:block text-[0.65rem] tracking-[0.2em] text-subtle uppercase font-semibold">
+                    Side Controls Active
+                  </div>
+                </div>
+              </ScrollReveal>
+            )}
+          </div>
+        ) : (
+          <div className="text-center py-24 border border-dim mt-16 bg-white/[0.01]">
+            <p className="text-muted text-xs tracking-[0.2em] uppercase">
+              No projects found in this category.
+            </p>
+          </div>
+        )}
 
         {/* More coming */}
         <ScrollReveal delay={300}>
